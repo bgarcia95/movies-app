@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/theme/theme.dart';
+import 'package:movies_app/widgets/widgets.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({super.key});
@@ -15,9 +16,15 @@ class DetailsScreen extends StatelessWidget {
         slivers: [
           _CustomAppBar(),
           SliverList(
-            delegate: SliverChildListDelegate([
-              _PosterAndTitle(),
-            ]),
+            delegate: SliverChildListDelegate(
+              [
+                _PosterAndTitle(),
+                _Overview(),
+                _Overview(),
+                _Overview(),
+                const CastingCards(),
+              ],
+            ),
           )
         ],
       ),
@@ -38,6 +45,7 @@ class _CustomAppBar extends StatelessWidget {
         titlePadding: const EdgeInsets.all(0),
         title: Container(
           alignment: Alignment.bottomCenter,
+          padding: const EdgeInsets.only(bottom: 10),
           color: Colors.black12,
           width: double.infinity,
           child: const Text(
@@ -108,6 +116,23 @@ class _PosterAndTitle extends StatelessWidget {
             ],
           )
         ],
+      ),
+    );
+  }
+}
+
+class _Overview extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 30,
+        vertical: 10,
+      ),
+      child: Text(
+        'Minim labore dolore nulla elit exercitation voluptate velit ipsum in. Ad culpa sit aliqua aute magna tempor pariatur quis dolore sit anim. Dolor amet eu elit officia id cillum irure quis nostrud labore labore amet duis. Mollit minim ullamco id magna velit qui aliquip excepteur nisi amet ullamco consequat. Duis consectetur proident Lorem amet cupidatat qui incididunt reprehenderit ut ullamco sint adipisicing. Proident sint dolore culpa elit sit consequat non occaecat ullamco. .',
+        textAlign: TextAlign.justify,
+        style: Theme.of(context).textTheme.subtitle1,
       ),
     );
   }
