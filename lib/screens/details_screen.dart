@@ -16,7 +16,7 @@ class DetailsScreen extends StatelessWidget {
           _CustomAppBar(),
           SliverList(
             delegate: SliverChildListDelegate([
-              _PostAndTitle(),
+              _PosterAndTitle(),
             ]),
           )
         ],
@@ -55,7 +55,7 @@ class _CustomAppBar extends StatelessWidget {
   }
 }
 
-class _PostAndTitle extends StatelessWidget {
+class _PosterAndTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextTheme theme = Theme.of(context).textTheme;
