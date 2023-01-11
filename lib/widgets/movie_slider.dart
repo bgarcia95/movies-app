@@ -32,7 +32,6 @@ class _MovieSliderState extends State<MovieSlider> {
           return;
         } else {
           widget.onNextPage();
-          print('triggered');
           // We store the value from maxScroll value when calling onNextPage
           maxScrollTemp = maxScroll;
         }
