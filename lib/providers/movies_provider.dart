@@ -10,6 +10,7 @@ class MoviesProvider extends ChangeNotifier {
 
   List<Movie> nowPlayingMovies = [];
   List<Movie> popularMovies = [];
+  int _popularPage = 0;
 
   MoviesProvider() {
     print('MoviesProvider initialized');
@@ -18,15 +19,21 @@ class MoviesProvider extends ChangeNotifier {
     getPopularMovies();
   }
 
-  getNowPlayingMovies() async {
-    var url = Uri.https(_baseURL, '3/movie/now_playing', {
+  // square brackets makes page parameter optional and assigns a default value of 1
+  Future<String> _getJsonData(String endpoint, [int page = 1]) async {
+    var url = Uri.https(_baseURL, endpoint, {
       'api_key': _apiKey,
       'language': _language,
-      'page': '1',
+      'page': '$page',
     });
 
     final response = await http.get(url);
-    final nowPlayingResponse = NowPlayingResponse.fromRawJson(response.body);
+    return response.body;
+  }
+
+  getNowPlayingMovies() async {
+    final jsonData = await _getJsonData('3/movie/now_playing');
+    final nowPlayingResponse = NowPlayingResponse.fromRawJson(jsonData);
 
     nowPlayingMovies = nowPlayingResponse.results;
 
@@ -35,16 +42,12 @@ class MoviesProvider extends ChangeNotifier {
   }
 
   getPopularMovies() async {
-    var url = Uri.https(_baseURL, '3/movie/popular', {
-      'api_key': _apiKey,
-      'language': _language,
-      'page': '1',
-    });
-
-    final response = await http.get(url);
-    final popularResponse = PopularResponse.fromRawJson(response.body);
+    _popularPage++;
+    final jsonData = await _getJsonData('3/movie/popular', _popularPage);
+    final popularResponse = PopularResponse.fromRawJson(jsonData);
 
     popularMovies = [...popularMovies, ...popularResponse.results];
+
     notifyListeners();
   }
 }
