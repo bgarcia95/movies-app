@@ -24,7 +24,7 @@ class MoviesProvider extends ChangeNotifier {
 
   // square brackets makes page parameter optional and assigns a default value of 1
   Future<String> _getJsonData(String endpoint, [int page = 1]) async {
-    var url = Uri.https(_baseURL, endpoint, {
+    final url = Uri.https(_baseURL, endpoint, {
       'api_key': _apiKey,
       'language': _language,
       'page': '$page',
@@ -67,5 +67,18 @@ class MoviesProvider extends ChangeNotifier {
     moviesCast[movieId] = creditsResponse.cast;
 
     return creditsResponse.cast;
+  }
+
+  Future<List<Movie>> searchMovies(String query) async {
+    final url = Uri.https(_baseURL, '3/search/movie', {
+      'api_key': _apiKey,
+      'language': _language,
+      'query': query,
+    });
+
+    final response = await http.get(url);
+    final searchresponse = SearchResponse.fromRawJson(response.body);
+
+    return searchresponse.results;
   }
 }
