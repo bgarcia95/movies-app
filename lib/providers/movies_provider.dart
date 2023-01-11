@@ -8,6 +8,8 @@ class MoviesProvider extends ChangeNotifier {
   String _baseURL = 'api.themoviedb.org';
   String _language = 'en-EN';
 
+  List<Movie> nowPlayingMovies = [];
+
   MoviesProvider() {
     print('MoviesProvider initialized');
 
@@ -24,6 +26,9 @@ class MoviesProvider extends ChangeNotifier {
     final response = await http.get(url);
     final nowPlayingResponse = NowPlayingResponse.fromRawJson(response.body);
 
-    print(nowPlayingResponse.results?[1]?.title);
+    nowPlayingMovies = nowPlayingResponse.results;
+
+    // this will make all listeners to redraw all widgets linked to this data
+    notifyListeners();
   }
 }
