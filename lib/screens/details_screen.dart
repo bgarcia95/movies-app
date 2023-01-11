@@ -19,8 +19,6 @@ class DetailsScreen extends StatelessWidget {
               [
                 _PosterAndTitle(movie),
                 _Overview(movie.overview),
-                _Overview(movie.overview),
-                _Overview(movie.overview),
                 CastingCards(movieId: movie.id),
               ],
             ),
@@ -144,7 +142,7 @@ class _Overview extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 30,
-        vertical: 10,
+        vertical: 20,
       ),
       child: Text(
         description,
